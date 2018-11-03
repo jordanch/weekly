@@ -1,5 +1,6 @@
 const { monthStringToZeroBasedNumber } = require("../helpers/dates")
 const { stripNewLineAndExcessWhitespace } = require("../helpers/text")
+const { includes } = require("lodash")
 
 function init(config, cheerio) {
   const _config = config
@@ -29,15 +30,16 @@ function init(config, cheerio) {
             .text()
             .split(" — ")[1]
             .split(" ")
-            .map((segment) => segment.replace(",", "").trim())
+            .map((segment) => segment.trim().replace(",", ""))
+            .filter((segment) => Boolean(segment))
 
           return {
             issueNumber: anchor.attr("href").split("/")[1],
             href: `${_config.FQDN}/${anchor.attr("href")}`,
             date: new Date(
-              dateSegments[2],
-              monthStringToZeroBasedNumber(dateSegments[0]),
-              dateSegments[1]
+              dateSegments[2], // year
+              monthStringToZeroBasedNumber(dateSegments[0]), // month
+              dateSegments[1] // day
             ).getTime()
           }
         })

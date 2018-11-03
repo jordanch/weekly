@@ -15,7 +15,7 @@ const TEST_CONFIG = {
 const jsWeeklyScraper = jsWeekly.init(TEST_CONFIG, cheerio)
 
 describe("JavaScript Weekly > Scraping", () => {
-  test("Can scrape the archive issue list", async () => {
+  test("Given HTML, can scrape the archive issue list", async () => {
     try {
       const html = await readFile(
         path.join(__dirname, "/html/js-weekly.archive.html"),
@@ -38,7 +38,7 @@ describe("JavaScript Weekly > Scraping", () => {
           {
             issueNumber: "410",
             href: "https://javascriptweekly.com/issues/410",
-            date: -2119744800000
+            date: 1541109600000
           },
           {
             issueNumber: "409",
@@ -78,7 +78,7 @@ describe("JavaScript Weekly > Scraping", () => {
           {
             issueNumber: "402",
             href: "https://javascriptweekly.com/issues/402",
-            date: -1967248800000
+            date: 1536271200000
           },
           {
             issueNumber: "401",
@@ -105,7 +105,7 @@ describe("JavaScript Weekly > Scraping", () => {
     }
   })
 
-  test("Can scrape an issue", async () => {
+  test("Given HTML, can scrape an issue", async () => {
     const html = await readFile(
       path.join(__dirname, "/html/js-weekly.issue.html"),
       {
