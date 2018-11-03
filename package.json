@@ -1,0 +1,21 @@
+{
+  "name": "weekly",
+  "version": "0.0.0",
+  "description": "Aggregator for web weekly newsletters",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "lodash": "^4.17.11",
+    "node-fetch": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.9",
+    "jest": "^23.6.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "Jordan Cole Hunt",
+  "license": "ISC"
+}
