@@ -1,4 +1,5 @@
 const jsWeekly = require("../js-weekly")
+const { JsWeeklyScraperError } = require("../../js-weekly/js-weekly.error")
 const cheerio = require("cheerio")
 const fs = require("fs")
 const promisify = require("util").promisify
@@ -12,20 +13,33 @@ const TEST_CONFIG = {
   FQDN: "https://javascriptweekly.com"
 }
 
+let issueHtml
+let archiveHtml
+
+beforeAll(async () => {
+  archiveHtml = await readFile(
+    path.join(__dirname, "/html/js-weekly.archive.html"),
+    {
+      encoding: "utf8"
+    }
+  )
+
+  issueHtml = await readFile(
+    path.join(__dirname, "/html/js-weekly.issue.html"),
+    {
+      encoding: "utf8"
+    }
+  )
+})
+
 const jsWeeklyScraper = jsWeekly.init(TEST_CONFIG, cheerio)
 
 describe("JavaScript Weekly > Scraping", () => {
   test("Given HTML, can scrape the archive issue list", async () => {
     try {
-      const html = await readFile(
-        path.join(__dirname, "/html/js-weekly.archive.html"),
-        {
-          encoding: "utf8"
-        }
-      )
       // create a map to more easily assert
       const issues = reduce(
-        await jsWeeklyScraper.getArchiveList(html),
+        await jsWeeklyScraper.getArchiveList(archiveHtml),
         (hash, issue) =>
           assign(hash, {
             [issue.issueNumber]: issue
@@ -106,13 +120,7 @@ describe("JavaScript Weekly > Scraping", () => {
   })
 
   test("Given HTML, can scrape an issue", async () => {
-    const html = await readFile(
-      path.join(__dirname, "/html/js-weekly.issue.html"),
-      {
-        encoding: "utf8"
-      }
-    )
-    expect(jsWeeklyScraper.getArticlesFromIssue(html, 410)).toEqual({
+    expect(jsWeeklyScraper.getArticlesFromIssue(issueHtml, 410)).toEqual({
       410: [
         {
           title: "An Annotated webpack 4 Config for Frontend Development",
@@ -130,5 +138,27 @@ describe("JavaScript Weekly > Scraping", () => {
         }
       ]
     })
+  })
+
+  test("Will throw error if issue number not present or unexpected type", async () => {
+    expect(() =>
+      jsWeeklyScraper.getArticlesFromIssue(issueHtml, null)
+    ).toThrowError(JsWeeklyScraperError)
+
+    expect(() =>
+      jsWeeklyScraper.getArticlesFromIssue(issueHtml, undefined)
+    ).toThrowError("Issue number required")
+
+    expect(() =>
+      jsWeeklyScraper.getArticlesFromIssue(issueHtml, "308")
+    ).toThrowError(JsWeeklyScraperError)
+
+    expect(() => jsWeeklyScraper.getArticlesFromIssue(issueHtml)).toThrowError(
+      JsWeeklyScraperError
+    )
+
+    expect(() =>
+      jsWeeklyScraper.getArticlesFromIssue(issueHtml, undefined)
+    ).toThrowError(JsWeeklyScraperError)
   })
 })
