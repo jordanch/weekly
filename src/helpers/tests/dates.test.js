@@ -1,0 +1,20 @@
+const { monthStringToZeroBasedNumber } = require("../dates")
+
+describe("Helper > Dates", () => {
+  test("Can get 0-index number from month string", () => {
+    expect(monthStringToZeroBasedNumber("january")).toBe(0)
+    expect(monthStringToZeroBasedNumber("february")).toBe(1)
+    expect(monthStringToZeroBasedNumber("march")).toBe(2)
+    expect(monthStringToZeroBasedNumber("april")).toBe(3)
+    expect(monthStringToZeroBasedNumber("may")).toBe(4)
+    expect(monthStringToZeroBasedNumber("june")).toBe(5)
+    expect(monthStringToZeroBasedNumber("july")).toBe(6)
+    expect(monthStringToZeroBasedNumber("august")).toBe(7)
+    expect(monthStringToZeroBasedNumber("september")).toBe(8)
+    expect(monthStringToZeroBasedNumber("october")).toBe(9)
+    expect(monthStringToZeroBasedNumber("november")).toBe(10)
+    expect(monthStringToZeroBasedNumber("december")).toBe(11)
+    expect(monthStringToZeroBasedNumber("sunearthmoon")).toBe(null)
+    expect(monthStringToZeroBasedNumber()).toBe(null)
+  })
+})

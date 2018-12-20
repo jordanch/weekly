@@ -1,7 +1,8 @@
+// todo: older js weekly issues have a different html structure. how to scrape based on different html structure?
 const { monthStringToZeroBasedNumber } = require("../../helpers/dates")
 const { stripNewLineAndExcessWhitespace } = require("../../helpers/text")
 const { JsWeeklyScraperError } = require("./js-weekly.error")
-const { includes, isNumber } = require("lodash")
+const { includes, isNumber, isString } = require("lodash")
 
 function init(config, cheerio) {
   const _config = config
@@ -17,8 +18,9 @@ function init(config, cheerio) {
    * number, hyperlink and issue date.
    *
    * @param {string} html
+   * @return {{ issueNumber: number, href: string, date: numer }[]}
    */
-  async function getArchiveList(html) {
+  function getArchiveList(html) {
     const $ = _cheerio.load(html)
 
     return $(".issue")
@@ -33,7 +35,7 @@ function init(config, cheerio) {
           .filter((segment) => Boolean(segment))
 
         return {
-          issueNumber: anchor.attr("href").split("/")[1],
+          issueNumber: parseInt(anchor.attr("href").split("/")[1], 10),
           href: `${_config.FQDN}/${anchor.attr("href")}`,
           date: new Date(
             dateSegments[2], // year
@@ -55,6 +57,10 @@ function init(config, cheerio) {
    * @returns {{[property: number]: IArticle[] | null[] | []}}
    */
   function getArticlesFromIssue(html, issueNumber) {
+    if (!isString(html)) {
+      throw new JsWeeklyScraperError("Html must be type string")
+    }
+
     const $ = cheerio.load(html)
 
     if (!isNumber(issueNumber))
@@ -91,9 +97,7 @@ function init(config, cheerio) {
       })
       .get()
 
-    return {
-      [issueNumber]: articles
-    }
+    return articles
   }
 }
 
