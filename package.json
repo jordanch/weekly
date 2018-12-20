@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "firebase-admin": "^6.4.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.2.0"
   },
@@ -14,7 +15,8 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "start": "node src/index.js"
   },
   "author": "Jordan Cole Hunt",
   "license": "ISC"
