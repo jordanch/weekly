@@ -4,19 +4,25 @@
   "description": "Aggregator for web weekly newsletters",
   "main": "index.js",
   "dependencies": {
+    "algoliasearch": "^3.32.0",
     "cheerio": "^1.0.0-rc.2",
+    "debug": "^4.1.1",
     "firebase-admin": "^6.4.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.2.0"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.9",
-    "jest": "^23.6.0"
+    "@types/node-fetch": "^2.3.3",
+    "jest": "^23.6.0",
+    "nodemon": "^1.19.0"
   },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "start": "node src/index.js"
+    "coverage": "jest --coverage",
+    "dev": "DEBUG='weekly:*' nodemon src/index.js",
+    "testhtml:jsweekly": "node workflow/update-jsweekly-scraper-test-html.js"
   },
   "author": "Jordan Cole Hunt",
   "license": "ISC"

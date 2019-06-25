@@ -1,18 +1,20 @@
 const { filter } = require("lodash")
 
 function stripNewLineAndExcessWhitespace(text) {
-  return filter(
-    filter(text.trim().split(""), (char) => {
+  return text
+    .trim()
+    .split("")
+    .filter((char) => {
       if (char === "\n") return false
 
       return true
-    }),
-    (char, index, collection) => {
+    })
+    .filter((char, index, collection) => {
       if (char === " " && collection[index - 1] === " ") return false
 
       return true
-    }
-  ).join("")
+    })
+    .join("")
 }
 
 module.exports = {

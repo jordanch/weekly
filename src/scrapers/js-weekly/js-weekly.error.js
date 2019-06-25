@@ -1,9 +1,7 @@
-const { ScraperError } = require("../scraper.error")
-
-class JsWeeklyScraperError extends ScraperError {
+class JsWeeklyScraperError extends Error {
   constructor(message) {
     super(message)
-    this.scraper = "JsWeekly"
+    this.name = "JsWeeklyScraper"
   }
 }
 
