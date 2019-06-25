@@ -14,3 +14,14 @@ the program will
 2. scrape issues and extract information such as title and href
 3. handle errors - network + code
 4. handle notifying support of unexpected scraping results
+
+# Tests
+
+## HTML scraping
+
+The scraper has two public functions that carry out:
+
+- scraping archive, getting a list of issues
+- scraping issue, getting a list of articles
+
+HTML is used to test the functions. Find the html in `<scraper>/tests/html`.
