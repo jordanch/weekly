@@ -1,0 +1,1 @@
+- prettier for server

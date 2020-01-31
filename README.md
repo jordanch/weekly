@@ -1,27 +1,22 @@
 This application is three part:
 
-1. front end client (React.js)
+1. Frontend client (React.js)
 
-2. scaping on server (Node.js)
+2. Server (Node.js)
 
-3. firebase firestore database
+3. SQL database
 
 # overview
 
-the program will
+The application presents a list of news articles scraped from multiple news sources.
 
-1. scrape a list of js weekly articles
-2. scrape issues and extract information such as title and href
-3. handle errors - network + code
-4. handle notifying support of unexpected scraping results
+# Domain
 
-# Tests
+Issue
+Article -> Title, Author, URL
+Scraper
+Config
 
-## HTML scraping
 
-The scraper has two public functions that carry out:
-
-- scraping archive, getting a list of issues
-- scraping issue, getting a list of articles
 
 HTML is used to test the functions. Find the html in `<scraper>/tests/html`.
