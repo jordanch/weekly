@@ -14,7 +14,7 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.9",
     "@types/node-fetch": "^2.3.3",
-    "jest": "^23.6.0",
+    "jest": "^29.3.1",
     "nodemon": "^1.19.0"
   },
   "scripts": {
